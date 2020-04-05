@@ -28,14 +28,10 @@ public class PDFInfoExtractor implements ArticleInfoExtractor {
 
     @Override
     public Optional<ArticleInfo> extract(PDDocument document) {
-        if (!document.isEncrypted()) {
-            ArticleInfo articleInfo = new ArticleInfo();
-            PDDocumentInformation information = document.getDocumentInformation();
-            articleInfo.setTitle(information.getTitle());
-            articleInfo.setAuthors(Collections.singletonList(information.getAuthor()));
-            return Optional.of(articleInfo);
-        }
-        System.out.println("Could not extract article information from PDF information. Possible that the PDF creator did not set the file information.");
-        return Optional.empty();
+        ArticleInfo articleInfo = new ArticleInfo();
+        PDDocumentInformation information = document.getDocumentInformation();
+        articleInfo.setTitle(information.getTitle());
+        articleInfo.setAuthors(Collections.singletonList(information.getAuthor()));
+        return Optional.of(articleInfo);
     }
 }
