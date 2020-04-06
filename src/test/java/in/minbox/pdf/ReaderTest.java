@@ -12,7 +12,7 @@ public class ReaderTest {
 
     @Test
     public void extractHeader() {
-        String path = "src/test/resources/p28.pdf";
+        String path = "src/test/resources/pivot-tracing.pdf";
         Path paths = Paths.get(path);
         File file = new File(path);
         System.out.println(file.exists());

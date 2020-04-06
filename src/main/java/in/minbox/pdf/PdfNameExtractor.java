@@ -14,8 +14,8 @@ public class PdfNameExtractor {
 
     private final List<ArticleInfoExtractor> articleInfoExtractors;
 
-    public Optional<ArticleInfo> extract(String filePath) {
-        try (PDDocument document = PDDocument.load(new File(filePath))) {
+    public Optional<ArticleInfo> extract(File file) {
+        try (PDDocument document = PDDocument.load(file)) {
             if(document.isEncrypted()) {
                 System.out.println("Cannot read encrypted PDF. Exiting.");
                 System.exit(-2);

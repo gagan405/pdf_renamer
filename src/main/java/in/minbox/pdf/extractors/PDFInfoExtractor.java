@@ -18,7 +18,8 @@ public class PDFInfoExtractor implements ArticleInfoExtractor {
         ArticleInfo articleInfo = new ArticleInfo();
         try (PDDocument document = PDDocument.load(new File(absolutePath))) {
             PDDocumentInformation information = document.getDocumentInformation();
-            articleInfo.setTitle(information.getTitle());
+            String title = information.getTitle().substring(0, information.getTitle().indexOf("pdfauthor")).trim();
+            articleInfo.setTitle(title);
             articleInfo.setAuthors(Collections.singletonList(information.getAuthor()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,8 +31,13 @@ public class PDFInfoExtractor implements ArticleInfoExtractor {
     public Optional<ArticleInfo> extract(PDDocument document) {
         ArticleInfo articleInfo = new ArticleInfo();
         PDDocumentInformation information = document.getDocumentInformation();
-        articleInfo.setTitle(information.getTitle());
-        articleInfo.setAuthors(Collections.singletonList(information.getAuthor()));
-        return Optional.of(articleInfo);
+        if(information.getTitle() != null && !information.getTitle().isEmpty()) {
+            String title = information.getTitle().substring(0, information.getTitle().indexOf("pdfauthor")).trim();
+            articleInfo.setTitle(title);
+            articleInfo.setAuthors(Collections.singletonList(information.getAuthor()));
+            return Optional.of(articleInfo);
+        } else {
+            return Optional.empty();
+        }
     }
 }
