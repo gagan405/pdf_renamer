@@ -21,8 +21,11 @@ public class Renamer {
 
     public void renameFilesInDirectory(String dirPath, boolean recursive) {
         try {
+            Path root = Paths.get(dirPath);
+
             Stream<Path> walk = Files.walk(Paths.get(dirPath));
             walk.filter(Files::isRegularFile)
+                .filter(file -> file.getParent().equals(root))
                 .map(Path::toFile)
                 .filter(this::isPdfFile)
                 .forEach(x -> rename(dirPath, x));

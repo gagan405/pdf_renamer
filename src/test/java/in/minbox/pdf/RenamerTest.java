@@ -1,5 +1,6 @@
 package in.minbox.pdf;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,12 @@ public class RenamerTest {
 
         Renamer renamer = new Renamer(new PdfNameExtractor(articleInfoExtractors), NamingStrategy.CAMEL_CASE);
 
-        renamer.renameFilesInDirectory(path, false);
+        renamer.renameFilesInDirectory(path, true);
+    }
 
+    @Test
+    public void testRename() {
+        File file = new File("src/test/resources/p28.pdf");
+        file.renameTo(new File("src/test/resources", "p29.pdf"));
     }
 }
