@@ -10,7 +10,7 @@ public class Cli {
 
     @Parameter(names = {"--directory", "-d"},
         required = true,
-        description = "Absolute path to the directory")
+        description = "Absolute path to the directory containing PDF files")
     private String directory;
 
     @Parameter(names = {"--recursive", "-r"},
@@ -25,13 +25,13 @@ public class Cli {
 
     @Parameter(names = {"--max-name-length", "-l"},
         required = false,
-        description = "Max length of the file name. Default 100.")
+        description = "Max length of the file name. Default is 100.")
     private Integer length;
 
     @Parameter(names = {"--extractor", "-e"},
         required = false,
         description = "Name extractor to use: InfoExtractor, FirstLineExtractor."
-            + "Default behavior uses both extractors in the order : Info -> FirstLine")
+            + " Default behavior uses both extractors in the order : Info -> FirstLine")
     private String nameExtractor;
 
     @Parameter(names = "--help", help = true)
@@ -60,6 +60,4 @@ public class Cli {
 
         renamer.renameFilesInDirectory(directory, recursive);
     }
-
-
 }
