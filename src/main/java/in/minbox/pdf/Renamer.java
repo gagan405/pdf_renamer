@@ -46,13 +46,15 @@ public class Renamer {
     }
 
     private void rename(String directory, File file) {
+        System.out.println("Renaming file: " + file.getName());
         Optional<ArticleInfo> articleInfo = nameExtractor.extract(file);
         articleInfo.ifPresent(info -> {
-            String converted = namingStrategy.format(info.getTitle());
-            boolean isSuccess = file.renameTo(new File(directory, converted + ".pdf"));
+            String converted = namingStrategy.format(info.getTitle()) + ".pdf";
+            boolean isSuccess = file.renameTo(new File(directory, converted));
             if(!isSuccess) {
                 throw new RuntimeException("Failed to rename file : " + file.getName());
             }
+            System.out.println("Renamed file to: " + converted);
         });
     }
 

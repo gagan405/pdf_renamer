@@ -15,9 +15,12 @@ public enum NamingStrategy implements NameFormatter {
     HYPHENATED {
         @Override
         public String format(String input) {
-            return input.toLowerCase()
+            String result = input.toLowerCase()
                 .replaceAll("\\s+", "-")
                 .replaceAll("[^a-zA-Z0-9_-]", "");
+            if(result.lastIndexOf("-") == result.length() - 1) {
+                return result.substring(0, result.length() - 1);
+            } else return result;
         }
     },
     CAMEL_CASE {

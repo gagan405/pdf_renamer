@@ -12,16 +12,20 @@ import in.minbox.pdf.ArticleInfo;
 import in.minbox.pdf.ArticleInfoExtractor;
 import lombok.RequiredArgsConstructor;
 
-public class PDFTitleExtractor implements ArticleInfoExtractor {
+/**
+ * Reads the first page of the PDF and extracts the first few words as the title.
+ */
+@RequiredArgsConstructor
+public class FirstLineExtractor implements ArticleInfoExtractor {
 
-    private static final int MAX_LENGTH = 100;
+    private final int maxLength;
 
     public Optional<ArticleInfo> extract(PDDocument document) {
         try {
             PDFTextStripper pdfTextStripper = new PDFTextStripper();
             pdfTextStripper.setStartPage(0);
             pdfTextStripper.setEndPage(1);
-            Writer writer = new BoundedStringWriter(MAX_LENGTH);
+            Writer writer = new BoundedStringWriter(maxLength);
             pdfTextStripper.writeText(document, writer);
 
             String text = writer.toString();
@@ -50,7 +54,7 @@ public class PDFTitleExtractor implements ArticleInfoExtractor {
 
         @Override
         public void write(String str) {
-            if (count < MAX_LENGTH) {
+            if (count < limit) {
                 super.write(str);
                 count += str.length();
             }
